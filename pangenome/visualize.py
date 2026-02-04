@@ -120,19 +120,20 @@ def align2png(graph: Graph, query: str, edits: list[Edit],
 
   dot.render(cleanup=True, view=view)
 
-def alignment_strings(graph: Graph, query: str, edits: list[Edit]):
-  q = []
-  r = []
+def alignment_strings(graph: Graph, query: str, edits: list[Edit], color=True):
+  C = {"M": "\033[32m", "X": "\033[31m", "-": "\033[33m"} if color else {"M": "", "X": "", "-": ""}
+  R = "\033[0m" if color else ""
 
+  q, r = [], []
   for e in edits:
     if e.op in ("M", "X"):
-      q.append(query[e.qpos])
-      r.append(graph.nodes[e.node][e.npos])
+      q.append(f"{C[e.op]}{query[e.qpos]}{R}")
+      r.append(f"{C[e.op]}{graph.nodes[e.node][e.npos]}{R}")
     elif e.op == "I":
-      q.append(query[e.qpos])
-      r.append("-")
-    elif e.op == "D":
-      q.append("-")
-      r.append(graph.nodes[e.node][e.npos])
+      q.append(f"{C['X']}{query[e.qpos]}{R}")
+      r.append(f"{C['-']}-{R}")
+    else:
+      q.append(f"{C['-']}-{R}")
+      r.append(f"{C['X']}{graph.nodes[e.node][e.npos]}{R}")
 
   return "".join(q), "".join(r)
