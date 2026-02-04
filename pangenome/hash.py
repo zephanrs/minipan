@@ -2,7 +2,8 @@
 import random
 from typing import List
 
-seed = int.from_bytes(random.randbytes(8), "little") | 1
+# seed = int.from_bytes(random.randbytes(8), "little") | 1
+seed = 0x9e3779b97f4a7c15
 
 def hash(seq: str, k: int) -> List[int]:
   n = len(seq)

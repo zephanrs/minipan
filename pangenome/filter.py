@@ -2,16 +2,16 @@
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple
 from collections import defaultdict
-from graph import Graph
-from seed import Seed
+from .graph import Graph
+from .seed import Seed
 
 @dataclass
-class Filter:
+class Filterer:
   graph: Graph
   type: str # 'mean' or 'max'
   reward: int
-  edges: Dict[str, List[str]] = field(default_factory=lambda: defaultdict(list))
   dists: Dict[str, int]
+  edges: Dict[str, List[str]] = field(default_factory=lambda: defaultdict(list))
 
   def __post_init__(self):
     self.find_edges()

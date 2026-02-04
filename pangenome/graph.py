@@ -2,7 +2,6 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Set
 from collections import defaultdict
-import graphviz
 
 ### Graph Construction
 
@@ -43,32 +42,9 @@ def gfa2graph(file_path: str):
         
         case "P": graph.add_path(
           components[1],
-          (Handle(node[:-2], (node[-1] == '-')) for node in components[2].split(","))
+          [Handle(node[:-1], (node[-1] == '-')) for node in components[2].split(",")]
         )
         
         case _: raise ValueError("Unsupported")
     
   return graph
-
-### Visualization
-def graph2png(graph: Graph, name: str):
-  # setup
-  dot = graphviz.Digraph(filename=name, engine='dot', format='png')
-  dot.attr(rankdir='LR', nodesep='0.5', ranksep='0.8')
-  dot.attr('node', shape='box', fontname='Helvetica', style='filled', fillcolor='white')
-  dot.attr(dpi='300')
-
-  # add nodes
-  for id, seq in graph.nodes.items():
-    label = seq if len(seq) < 10 else f"{seq[:7]}..."
-    dot.node(id, label=label)
-  
-  # add edges
-  for src, dsts in graph.edges.items():
-    for dst in dsts:
-      srcp = "w" if src.rev else "e"
-      dstp = "e" if dst.rev else "w"
-      dot.edge(f"{src.node}:{srcp}", f"{dst.node}:{dstp}", color="black")
-
-  # export
-  dot.render(cleanup=True)

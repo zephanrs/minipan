@@ -1,5 +1,6 @@
 import os
-from pangenome.graph import gfa2graph, graph2png
+from pangenome.graph import gfa2graph
+from pangenome.visualize import graph2png
 
 gfa_path = os.path.join(os.path.dirname(__file__), "data.gfa")
 

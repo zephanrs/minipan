@@ -2,8 +2,8 @@
 from dataclasses import dataclass, field
 from typing import Dict, List
 from collections import defaultdict, deque
-from graph import Graph
-from hash import hash
+from .graph import Graph
+from .hash import hash
 
 @dataclass(eq=True, frozen=True)
 class Occ:
@@ -18,7 +18,7 @@ class Seed:
   npos: int
 
 @dataclass
-class Seed:
+class Seeder:
   graph: Graph
   k: int
   w: int

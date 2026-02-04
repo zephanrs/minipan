@@ -2,8 +2,8 @@
 from dataclasses import dataclass, field
 from collections import defaultdict, deque
 from typing import List, Dict, Tuple
-from graph import Graph
-from seed import Seed
+from .graph import Graph
+from .seed import Seed
 
 MATCH    =  3
 MISMATCH = -2
@@ -17,7 +17,7 @@ class Edit:
   op:   str # M X I D
 
 @dataclass
-class Align:
+class Aligner:
   graph: Graph
   preds: Dict[str, List[str]] = field(default_factory=lambda: defaultdict(list))
   succs: Dict[str, List[str]] = field(default_factory=lambda: defaultdict(list))
