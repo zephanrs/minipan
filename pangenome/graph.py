@@ -49,3 +49,23 @@ def gfa2graph(file_path: str):
         case _: raise ValueError("Unsupported")
     
   return graph
+
+def graph2gfa(graph: Graph, file_path: str):
+  with open(file_path, 'w') as file:
+    file.write("H\tVN:Z:1.0\n")
+    
+    # nodes
+    for node, seq in graph.nodes.items():
+      file.write(f"S\t{node}\t{seq}\n")
+    
+    # edges
+    for src, dsts in graph.edges.items():
+      src_ori = '-' if src.rev else '+'
+      for dst in dsts:
+        dst_ori = '-' if dst.rev else '+'
+        file.write(f"L\t{src.node}\t{src_ori}\t{dst.node}\t{dst_ori}\n")
+    
+    # paths
+    for name, path in graph.paths.items():
+      path_str = ",".join(f"{h.node}{'-' if h.rev else '+'}" for h in path)
+      file.write(f"P\t{name}\t{path_str}\t*\n")

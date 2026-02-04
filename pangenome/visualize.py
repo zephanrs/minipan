@@ -21,7 +21,7 @@ def create_graph(graph: Graph, name: str, hedges=None):
 
   # graph nodes
   for id, seq in graph.nodes.items():
-    label = seq if len(seq) < 10 else f"{seq[:7]}..."
+    label = seq
     dot.node(id, label=label)
 
   # graph edges
