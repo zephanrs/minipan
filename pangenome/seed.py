@@ -55,7 +55,7 @@ class Seed:
       
     return out
 
-  def get_seeds(self, query: str) -> List[Seed]:
+  def seed(self, query: str) -> List[Seed]:
     out = []
     for qpos, value in self.minimizers(query):
       for occ in self.index.get(value, ()):
